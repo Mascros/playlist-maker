@@ -7,9 +7,9 @@ class User(models.Model):
     spotify_email = models.EmailField()
     access_token = models.CharField(max_length=200)
     refresh_token = models.CharField(max_length=200)
-    access_token_expiry = models.DateTimeField()
+    token_expiry = models.DateTimeField()
 
-    def access_expired(self):
+    def token_expired(self):
         if datetime.now() < self.access_token_expiry:
             return False
         else:
