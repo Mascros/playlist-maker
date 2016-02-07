@@ -84,3 +84,6 @@ target/
 
 # pyenv
 .python-version
+
+playlistr/.idea/
+
