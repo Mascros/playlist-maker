@@ -87,3 +87,5 @@ target/
 
 playlistr/.idea/
 
+
+playlistr/db.sqlite3
