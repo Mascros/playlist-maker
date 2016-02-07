@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 
 class User(models.Model):
@@ -7,6 +8,12 @@ class User(models.Model):
     access_token = models.CharField(max_length=200)
     refresh_token = models.CharField(max_length=200)
     access_token_expiry = models.DateTimeField()
+
+    def access_expired(self):
+        if datetime.now() < self.access_token_expiry:
+            return False
+        else:
+            return True
 
 
 class UserPartyJoin(models.Model):
