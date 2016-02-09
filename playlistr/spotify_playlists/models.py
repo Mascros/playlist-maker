@@ -5,8 +5,8 @@ from datetime import datetime
 class User(models.Model):
     id = models.CharField(max_length=64, primary_key=True)
     spotify_email = models.EmailField()
-    access_token = models.CharField(max_length=200)
-    refresh_token = models.CharField(max_length=200)
+    access_token = models.CharField(max_length=163)
+    refresh_token = models.CharField(max_length=131)
     token_expiry = models.DateTimeField()
 
     def token_expired(self):
