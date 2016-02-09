@@ -1,5 +1,5 @@
 import requests as requests
-
+import json
 from spotify_playlists import models
 from urllib.parse import urlencode
 from base64 import b64encode
@@ -11,6 +11,8 @@ class API:
         self._client_secret = client_secret
         self._scope = scope
         self._redirect_uri = redirect_uri
+        self._auth = "Basic %s" % b64encode(str(self._client_id + ":" + self._client_secret).encode()).decode()
+        print(self._auth)
 
     def get_auth_request_url(self):
         data = {
@@ -28,7 +30,7 @@ class API:
                 "refresh_token": user.refresh_token,
             }
             headers = {
-                "Authorization": "Basic " + b64encode(bytes(self._client_id + ":" + self._client_secret))
+                "Authorization": self._auth
             }
             r = requests.post("https://accounts.spotify.com/api/token", data=data, headers=headers)
             return r
