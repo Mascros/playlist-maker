@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from spotify_playlists.services import API
 from os import path
 
@@ -21,3 +22,6 @@ def index(request):
     return render(request, "spotify_playlists/index.html", context=context)
 
 
+def redirect(request):
+    api.get_tokens_from_login(request.GET.get('code'))
+    return HttpResponse("We good")
