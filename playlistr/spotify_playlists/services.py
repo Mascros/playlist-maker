@@ -15,6 +15,10 @@ class API:
         self._auth = "Basic %s" % b64encode(str(self._client_id + ":" + self._client_secret).encode()).decode()
 
     def get_auth_request_url(self):
+        """
+        Get the url for the user to click to log in with Spotify
+        :return: Str- The url
+        """
         data = {
             "client_id": self._client_id,
             "response_type": "code",
@@ -49,6 +53,11 @@ class API:
 
     @staticmethod
     def get_current_user_profile(access_token):
+        """
+        Get the profile object for the current user
+        :param access_token: the access_token for the user
+        :return: Dict - The data returned by the API
+        """
         headers = {
                "Authorization": "Bearer " + access_token
         }
@@ -56,6 +65,11 @@ class API:
         return json.loads(r.text)
 
     def update_user_token(self, user):
+        """
+        Update the access_token and token_expiry for a given user
+        :param user: models.User - Will be mutated. Must have a refresh token
+        :return: void
+        """
         if isinstance(user, models.User):
             data = {
                 "grant_type": "refresh_code",
