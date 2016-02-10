@@ -23,5 +23,8 @@ def index(request):
 
 
 def redirect(request):
-    api.get_tokens_from_login(request.GET.get('code'))
+    user = api.get_login_tokens(request.GET.get('code'))
+
+    # TODO Get the remaining details needed to create the user model without nulls
+
     return HttpResponse("We good")
