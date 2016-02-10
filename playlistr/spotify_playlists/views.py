@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from spotify_playlists.services import API
 from os import path
+from spotify_playlists.models import User
 
 module_dir = path.dirname(__file__)
 file_path = path.join(module_dir, "secret.txt")
@@ -24,7 +25,10 @@ def index(request):
 
 def redirect(request):
     user = api.get_login_tokens(request.GET.get('code'))
-
-    # TODO Get the remaining details needed to create the user model without nulls
-
-    return HttpResponse("We good")
+    profile = api.get_current_user_profile(user['access_token'])
+    user['spotify_email'] = profile['email']
+    user['id'] = profile['id']
+    u = User(**user)
+    u.save()
+    request.session['id'] = u.id
+    return HttpResponse("Hello {}, your email is {}".format("X", "Y"))
