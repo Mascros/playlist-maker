@@ -43,7 +43,7 @@ class API:
         result = {
             "access_token": body['access_token'],
             "refresh_token": body['refresh_token'],
-            "expiry": expiry
+            "token_expiry": expiry
         }
         return result
 
