@@ -47,6 +47,14 @@ class API:
         }
         return result
 
+    @staticmethod
+    def get_current_user_profile(access_token):
+        headers = {
+               "Authorization": "Bearer " + access_token
+        }
+        r = requests.get("https://api.spotify.com/v1/me", headers=headers)
+        return json.loads(r.text)
+
     def update_user_token(self, user):
         if isinstance(user, models.User):
             data = {
