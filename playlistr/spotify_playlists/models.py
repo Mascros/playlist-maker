@@ -21,6 +21,7 @@ class Party(models.Model):
     target_duration_time = models.PositiveIntegerField()
     last_used = models.DateTimeField()
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    party_start_date = models.DateField()
 
 
 class UserPartyJoin(models.Model):
