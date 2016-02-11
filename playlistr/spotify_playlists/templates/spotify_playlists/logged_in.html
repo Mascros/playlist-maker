@@ -5,7 +5,7 @@
     <title>Playlist Maker - Join or Start</title>
 </head>
 <body>
-<h1>Playlist Maker - Join or Start</h1>
+<h1><a href="{% url 'spotify_playlists:index' %}">Playlist Maker</a> - Join or Start</h1>
 <div id="join">
     <h2>Join a party</h2>
     <form action="{% url 'spotify_playlists:join' %}">
@@ -21,7 +21,7 @@
         {% csrf_token %}
         <label for="party_name">Name your party: </label>
         <input type="text" name="party_name" id="party_name">
-        <button type="submit">Join Party</button>
+        <button type="submit">Start Party</button>
     </form>
 </div>
 <div id="manage">

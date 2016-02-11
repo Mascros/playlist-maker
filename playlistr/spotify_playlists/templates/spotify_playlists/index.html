@@ -5,7 +5,7 @@
     <title>Playlist Maker - Home</title>
 </head>
 <body>
-<h1>Playlist Maker - Home</h1>
+<a href="{% url 'spotify_playlists:index' %}"><h1>Playlist Maker - Home</h1></a>
 <a href="{{ spotify_auth_url }}">Log in with Spotify</a>
 </body>
 </html>
