@@ -72,13 +72,16 @@ class API:
         """
         if isinstance(user, models.User):
             data = {
-                "grant_type": "refresh_code",
+                "grant_type": "refresh_token",
                 "refresh_token": user.refresh_token
             }
             headers = {
                 "Authorization": self._auth
             }
             r = requests.post("https://accounts.spotify.com/api/token", data=data, headers=headers)
-            raise NotImplementedError("Not finished")
+            r = json.loads(r.text)
+            user.access_token = r['access_token']
+            user.token_expiry = datetime.now() + timedelta(seconds=r['expires_in']-2)
+            user.save()
         else:
             raise TypeError("user must be an instance of models.User")
