@@ -31,4 +31,4 @@ def redirect(request):
     u = User(**user)
     u.save()
     request.session['id'] = u.id
-    return HttpResponse("Hello {}, your email is {}".format("X", "Y"))
+    return render(request, 'spotify_playlists/logged_in.html')
