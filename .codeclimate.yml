@@ -7,8 +7,8 @@ engines:
     enabled: true
     config:
       languages:
-        -python
-        -javascript
+        - python
+        - javascript
   fixme:
     enabled: true
   pep8:
