@@ -6,6 +6,6 @@ Users sign in with their spotify account, choose some freinds, and the site will
 ##Tests
 From now on all contributions must include unit tests.
 To run tests do:
-'''
+```
 python manage.py test polls
-'''
+```
