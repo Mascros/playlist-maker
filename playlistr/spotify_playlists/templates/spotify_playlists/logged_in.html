@@ -8,7 +8,7 @@
 <h1><a href="{% url 'spotify_playlists:index' %}">Playlist Maker</a> - Join or Start</h1>
 <div id="join">
     <h2>Join a party</h2>
-    <form action="{% url 'spotify_playlists:join' %}">
+    <form action="{% url 'spotify_playlists:join' %}" method="POST">
         {% csrf_token %}
         <label for="party_id">Enter the party ID: </label>
         <input type="text" name="party_id" id="party_id">
@@ -17,7 +17,7 @@
 </div>
 <div id="start">
     <h2>Start a party</h2>
-    <form action="{% url 'spotify_playlists:start' %}">
+    <form action="{% url 'spotify_playlists:start' %}" method="POST">
         {% csrf_token %}
         <label for="party_name">Name your party: </label>
         <input type="text" name="party_name" id="party_name">
