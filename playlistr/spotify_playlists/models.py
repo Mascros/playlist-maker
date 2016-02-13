@@ -20,7 +20,7 @@ class User(models.Model):
 
 
 class Party(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.CharField(primary_key=True, max_length=8)
     target_duration_time = models.PositiveIntegerField()
     last_used = models.DateTimeField()
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
