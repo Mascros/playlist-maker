@@ -1,0 +1,19 @@
+engines:
+  csslint:
+    enabled: true
+  eslint:
+    enabled: true
+  duplication:
+    enabled: true
+  fixme:
+    enabled: true
+  pep8:
+    enabled: true
+  radon:
+    enabled: true
+ratings:
+  paths:
+  - playlistr/playlistr/**
+  - playlistr/spotify_playlists**
+exclude_paths:
+- playlistr/spotify_playlists/migrations/**/*
