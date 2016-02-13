@@ -24,7 +24,6 @@ class Party(models.Model):
     target_no_songs = models.PositiveIntegerField()
     last_used = models.DateTimeField()
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    party_start_date = models.DateField()
 
     def __str__(self):
         return "<Party> with id: {}, creator {}".format(self.id, self.creator)
