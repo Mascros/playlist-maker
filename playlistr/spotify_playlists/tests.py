@@ -1,8 +1,13 @@
 from datetime import datetime
-from django.test import TestCase
+from django.test import TestCase, Client
+from django.test.utils import setup_test_environment
 from django.core.exceptions import FieldError
+from django.core.urlresolvers import reverse
 
 from .models import User
+
+setup_test_environment()
+client = Client()
 
 
 class UserMethodTests(TestCase):
@@ -32,5 +37,12 @@ class UserMethodTests(TestCase):
 
 
 class IndexViewTests(TestCase):
-    def test_index_view(self):
-        pass
+    def setUp(self):
+        self.res = client.get(reverse('spotify_playlists:index'))
+
+    def test_status_code(self):
+        self.assertEqual(self.res.status_code, 200)
+
+    def test_auth_url(self):
+        self.assertIn(b'https://accounts.spotify.com/authorize?', self.res.content)
+        self.assertTrue(b'response_type=code', self.res.content)
