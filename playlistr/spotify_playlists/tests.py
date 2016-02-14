@@ -26,3 +26,8 @@ class UserMethodTests(TestCase):
         """
         user = User(token_expiry=datetime.max)
         self.assertRaises(FieldError, user.token_expired)
+
+
+class IndexViewTests(TestCase):
+    def test_index_view(self):
+        pass
