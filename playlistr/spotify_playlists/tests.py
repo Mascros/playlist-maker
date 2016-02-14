@@ -45,4 +45,4 @@ class IndexViewTests(TestCase):
 
     def test_auth_url(self):
         self.assertIn(b'https://accounts.spotify.com/authorize?', self.res.content)
-        self.assertTrue(b'response_type=code', self.res.content)
+        self.assertIn(b'response_type=code', self.res.content)
