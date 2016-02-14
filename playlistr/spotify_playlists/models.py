@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.core.exceptions import FieldError
 
 
 class User(models.Model):
@@ -10,10 +11,13 @@ class User(models.Model):
     token_expiry = models.DateTimeField()
 
     def token_expired(self):
-        if datetime.now() < self.access_token_expiry:
-            return False
+        if self.access_token == "":
+            raise FieldError("User has no access token")
         else:
-            return True
+            if datetime.now() < self.token_expiry:
+                return False
+            else:
+                return True
 
     def __str__(self):
         return "<User> with id: {}, email {}, tok_exp {}".format(self.id, self.spotify_email, self.token_expiry)
