@@ -41,8 +41,14 @@ class IndexViewTests(TestCase):
         self.res = client.get(reverse('spotify_playlists:index'))
 
     def test_status_code(self):
+        """
+        the index view should always return a 200 OK HTTP response
+        """
         self.assertEqual(self.res.status_code, 200)
 
     def test_auth_url(self):
+        """
+        the index view should always contain an auth url for spotify login
+        """
         self.assertIn(b'https://accounts.spotify.com/authorize?', self.res.content)
         self.assertIn(b'response_type=code', self.res.content)
