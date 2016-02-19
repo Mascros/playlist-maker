@@ -17,7 +17,7 @@ class API:
     def get_auth_request_url(self):
         """
         Get the url for the user to click to log in with Spotify
-        :return: Str- The url
+        :return: Str - The url
         """
         data = {
             "client_id": self._client_id,
