@@ -1,4 +1,6 @@
+from django.core.urlresolvers import reverse
 from django.shortcuts import render
+from django.shortcuts import redirect as django_redirect
 from django.http import HttpResponse
 from spotify_playlists.services import API
 from os import path
@@ -28,7 +30,10 @@ def index(request):
 
 
 def redirect(request):
-    user = api.get_login_tokens(request.GET.get('code'))
+    code = request.GET.get('code')
+    if code is None:
+        return django_redirect(reverse('spotify_playlists:index'))
+    user = api.get_login_tokens(code)
     profile = api.get_current_user_profile(user['access_token'])
     user['spotify_email'] = profile['email']
     user['id'] = profile['id']

@@ -74,7 +74,7 @@ class RedirectViewLoggedInTests(TestCase):
             'id': 'test_user_id'
         }
         API.get_current_user_profile = MagicMock(return_value=profile)
-        self.res = client.get(reverse('spotify_playlists:redirect'))
+        self.res = client.get(reverse('spotify_playlists:redirect') + "?code=123xyz")
 
     def test_status_code(self):
         """
@@ -98,3 +98,18 @@ class RedirectViewLoggedInTests(TestCase):
 
     def tearDown(self):
         self.res.close()
+
+
+class RedirectViewFailedLoginTests(TestCase):
+    def setUp(self):
+        self.res = client.get(reverse('spotify_playlists:redirect'))
+
+    def test_assert_redirect_to_index(self):
+        """
+        the redirect view should redirect the user to the index view if they are not logged in
+        """
+        self.assertEqual(self.res.status_code, 302)
+        self.assertEqual(self.res.url, '/')
+
+
+
