@@ -113,6 +113,9 @@ class RedirectViewFailedLoginTests(TestCase):
 
 
 class StartPartyViewHappyTests(TestCase):
+    """
+    User is authenticated (has a session with an id)
+    """
     def setUp(self):
         self.res = client.get(reverse('spotify_playlists:testing_session'))
         self.res = client.post(reverse('spotify_playlists:start'), data={'party_name': 'test_party_name'})
@@ -128,3 +131,13 @@ class StartPartyViewHappyTests(TestCase):
         the name user chose for the party should be displayed on the page
         """
         self.assertIn(b'test_party_name', self.res.content)
+
+    def test_start_party_in_content(self):
+        """
+        'Start Party' should appear somewhere in the response content
+        """
+        self.assertIn(b'Start Party', self.res.content)
+
+    def tearDown(self):
+        self.res.close()
+
