@@ -112,4 +112,19 @@ class RedirectViewFailedLoginTests(TestCase):
         self.assertEqual(self.res.url, '/')
 
 
+class StartPartyViewHappyTests(TestCase):
+    def setUp(self):
+        self.res = client.get(reverse('spotify_playlists:testing_session'))
+        self.res = client.post(reverse('spotify_playlists:start'), data={'party_name': 'test_party_name'})
 
+    def test_status_code(self):
+        """
+        the status code should be 200 if the user is logged in
+        """
+        self.assertEqual(self.res.status_code, 200)
+
+    def test_party_name_in_body(self):
+        """
+        the name user chose for the party should be displayed on the page
+        """
+        self.assertIn(b'test_party_name', self.res.content)
