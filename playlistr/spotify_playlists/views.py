@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect as django_redirect
 from django.http import HttpResponse
 from spotify_playlists.services import API
+from playlistr.settings import DEBUG
 from os import path
 from spotify_playlists.models import User
 from django.utils.crypto import get_random_string
@@ -21,6 +22,16 @@ api = API(
 )
 
 log = logging.getLogger(__name__)
+
+
+def testing_session(request):
+    # Create a session for use in unittests so the test client looks authenticated
+    if not DEBUG:
+        raise Exception("This view should always be disabled when in production.")
+    else:
+        log.info("Creating a session for use in testing. id=test_user_id")
+        request.session['id'] = 'test_user_id'
+        return HttpResponse("Session is created")
 
 
 def index(request):
