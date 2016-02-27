@@ -141,3 +141,14 @@ class StartPartyViewHappyTests(TestCase):
     def tearDown(self):
         self.res.close()
 
+
+class StartPartyViewSadTests(TestCase):
+    """
+    User is not authenticated (has no id or session)
+    """
+    def setUp(self):
+        self.res = client.get(reverse('spotify_playlists:start'), data={'party_name': 'test_party_name'}, follow=True)
+
+    def test_redirect_to_index(self):
+        self.assertIn(b"Log in with Spotify", self.res.content)
+        self.assertIn(b"Playlist Maker - Home", self.res.content)
