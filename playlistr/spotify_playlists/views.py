@@ -54,12 +54,12 @@ def start(request):
         party_name = request.POST.get('party_name')
 
     except KeyError:
-        log.debug("User with no id in session, or did not choose a party name. redirected to index")
+        log.info("User with no id in session, or did not choose a party name. redirected to index")
         return render(request, 'spotify_playlists/index.html')
 
     else:
         party_id = get_random_string(length=8)
-        log.debug("User_id '{}' starting party with name '{}' and party_id '{}' ".format(user_id, party_name, party_id))
+        log.info("User_id '{}' starting party with name '{}' and party_id '{}' ".format(user_id, party_name, party_id))
         context = {
             "party_name": party_name,
             "party_id": party_id
