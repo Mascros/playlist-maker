@@ -9,7 +9,7 @@
 <body>
 <h1><a href="{% url 'spotify_playlists:index' %}">Playlist Maker</a> - Start party</h1>
 <h4>{{ party_name }}</h4>
-<form action="{% url 'spotify_playlists:save_party' %}">
+<form action="{% url 'spotify_playlists:save_party' %}" method="post">
     {% csrf_token %}
     <input type="text" id="party_name" name="party_name" class="no_display" value="{{ party_name }}">
     <input type="text" id="party_id" name="party_id" class="no_display" value="{{ party_id }}">
