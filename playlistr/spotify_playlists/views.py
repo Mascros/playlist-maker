@@ -65,7 +65,7 @@ def start(request):
         party_name = request.POST.get('party_name')
 
     except KeyError:
-        log.info("User with no id in session, or did not choose a party name. redirected to index")
+        log.info("start view: User with no id in session, or did not choose a party name. redirected to index")
         return render(request, 'spotify_playlists/index.html')
 
     else:
