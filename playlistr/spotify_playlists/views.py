@@ -66,7 +66,7 @@ def start(request):
 
     except KeyError:
         log.info("start view: User with no id in session, or did not choose a party name. redirected to index")
-        return render(request, 'spotify_playlists/index.html')
+        return django_redirect('index')
 
     else:
         party_id = get_random_string(length=8)
