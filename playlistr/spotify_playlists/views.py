@@ -1,12 +1,13 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
-from django.shortcuts import redirect as django_redirect
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from spotify_playlists.services import API
 from playlistr.settings import DEBUG
 from os import path
 from spotify_playlists.models import User
 from django.utils.crypto import get_random_string
+from datetime import datetime
 import logging
 
 module_dir = path.dirname(__file__)
@@ -41,10 +42,12 @@ def index(request):
     return render(request, "spotify_playlists/index.html", context=context)
 
 
-def redirect(request):
+def redirecter(request):
     code = request.GET.get('code')
+
     if code is None:
-        return django_redirect(reverse('spotify_playlists:index'))
+        return redirect(reverse('spotify_playlists:index'))
+
     user = api.get_login_tokens(code)
     profile = api.get_current_user_profile(user['access_token'])
     user['spotify_email'] = profile['email']
@@ -66,7 +69,7 @@ def start(request):
 
     except KeyError:
         log.info("start view: User with no id in session, or did not choose a party name. redirected to index")
-        return django_redirect('spotify_playlists:index')
+        return redirect('spotify_playlists:index')
 
     else:
         party_id = get_random_string(length=8)
