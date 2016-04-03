@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from spotify_playlists.services import API
 from playlistr.settings import DEBUG
 from os import path
-from spotify_playlists.models import User
+from spotify_playlists.models import User, Party
 from django.utils.crypto import get_random_string
 from datetime import datetime
 import logging
@@ -82,4 +82,31 @@ def start(request):
 
 
 def save_party(request):
-    return HttpResponse("Not implemented yet")
+    try:
+        user_id = request.session['id']
+
+    except KeyError:
+        log.info("save_party view: User with no id in session. redirected to index")
+        return redirect('spotify_playlists:index')
+
+    else:
+        # Create the party and save in the database
+        party_id = get_random_string(8)
+        party = Party(
+            id=party_id,
+            target_no_songs=int(request.POST.get('target_no_songs')),
+            last_used=datetime.now(),
+            creator=User.objects.get(id=user_id),
+            name=request.POST.get('party_name')
+        )
+        party.save()
+
+        context = {
+            'party': {
+                'name': party.name,
+                'creator': user_id
+            },
+            'editable': True
+        }
+
+        return render(request, 'spotify_playlists/party.html', context=context)
