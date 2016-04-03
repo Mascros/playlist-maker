@@ -1,12 +1,13 @@
 from datetime import datetime
+from unittest.mock import MagicMock
+
 from django.test import TestCase, Client
 from django.test.utils import setup_test_environment
 from django.core.exceptions import FieldError
 from django.core.urlresolvers import reverse
-from unittest.mock import MagicMock
 
+from spotify_playlists.services import API
 from .models import User
-from .services import API
 
 setup_test_environment()
 client = Client()
@@ -61,11 +62,9 @@ class IndexViewTests(TestCase):
 
 class RedirectViewLoggedInTests(TestCase):
     def setUp(self):
-        # Prevent save() from crashing because we don't have the side effects from the methods we stub
-        User.save = MagicMock()
-
         user = {
-            'access_token': "token"
+            'access_token': "token",
+            'token_expiry': datetime.max
         }
         API.get_login_tokens = MagicMock(return_value=user)
 
@@ -88,14 +87,6 @@ class RedirectViewLoggedInTests(TestCase):
         """
         self.assertEqual(client.session['id'], 'test_user_id')
 
-    def test_user_saved(self):
-        """
-        the redirect view should save the user to the database
-        """
-        # The comment below stops PyCharm from complaining because it doesnt know setUp is always called first
-        # noinspection PyUnresolvedReferences
-        User.save.assert_called_with()
-
     def tearDown(self):
         self.res.close()
 
@@ -110,6 +101,9 @@ class RedirectViewFailedLoginTests(TestCase):
         """
         self.assertEqual(self.res.status_code, 302)
         self.assertEqual(self.res.url, '/')
+
+    def tearDown(self):
+        self.res.close()
 
 
 class StartPartyViewHappyTests(TestCase):
@@ -152,3 +146,38 @@ class StartPartyViewSadTests(TestCase):
     def test_redirect_to_index(self):
         self.assertIn(b"Log in with Spotify", self.res.content)
         self.assertIn(b"Playlist Maker - Home", self.res.content)
+
+    def tearDown(self):
+        self.res.close()
+
+
+class SavePartyViewHappyTests(TestCase):
+    """
+    User is authenticated (has a session with an id)
+    """
+    def setUp(self):
+        data = {
+            'target_no_songs': '20',
+            'party_name': 'Test Party'
+        }
+
+        user = User(
+            id='test_user_id',
+            spotify_email='test@example.com',
+            access_token='abcdef',
+            refresh_token='ghijkl',
+            token_expiry=datetime.max
+        )
+        user.save()
+
+        self.res = client.get(reverse('spotify_playlists:testing_session'))
+        self.res = client.post(reverse('spotify_playlists:save_party'), data=data)
+
+    def test_status_code(self):
+        self.assertEqual(self.res.status_code, 200)
+
+    def test_party_name_in_body(self):
+        self.assertIn(b'Test Party', self.res.content)
+
+    def test_party_is_editable(self):
+        self.assertIn(b'You can edit this? True', self.res.content)
