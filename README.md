@@ -1,4 +1,4 @@
-# Playlist Maker [![Build Status](https://travis-ci.org/Mascros/playlist-maker.svg?branch=master)](https://travis-ci.org/Mascros/playlist-maker) [![Code Climate](https://codeclimate.com/github/Mascros/playlist-maker/badges/gpa.svg)](https://codeclimate.com/github/Mascros/playlist-maker)
+# Playlist Maker [![Build Status](https://travis-ci.org/RobinStephenson/playlist-maker.svg?branch=master)](https://travis-ci.org/RobinStephenson/playlist-maker) [![Code Climate](https://codeclimate.com/github/Mascros/playlist-maker/badges/gpa.svg)](https://codeclimate.com/github/Mascros/playlist-maker)
 A new and improved version of the site I made for my A Level computing project but (hopefully) better.
 
 Users sign in with their spotify account, choose some freinds, and the site will create a playlist based on the groups music tastes.
