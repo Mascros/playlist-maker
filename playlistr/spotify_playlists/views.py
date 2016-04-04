@@ -102,12 +102,7 @@ def save_party(request):
         party.save()
 
         context = {
-            'party': {
-                'name': party.name,
-                'creator': user_id,
-                'id': party_id,
-                'share_url': "http://" + request.get_host() + "/join/" + party_id
-            },
+            'party': party.get_for_context(request),
             'editable': 'true',
             'can_publish': 'true'
         }
