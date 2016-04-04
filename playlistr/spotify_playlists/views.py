@@ -164,7 +164,34 @@ def save_party(request):
 
 
 def publish(request):
-    return HttpResponse("Not Implemented Yet")
+    try:
+        user_id = request.session['id']
+        user = User.objects.get(id=user_id)
+
+    except KeyError:
+        log.info("publish view: User with no id in session. redirected to index")
+        return redirect('spotify_playlists:index')
+
+    except User.DoesNotExist:
+        log.warning("publish view: User with session but does not exist, redirected to index")
+        return redirect('spotify_playlists:index')
+
+    else:
+        party_id = request.GET.get('partyid')
+        try:
+            party = Party.objects.get(id=party_id)
+
+        except Party.DoesNotExist:
+            log.info("publish view: Party requested to be published does not exist, redirected to index")
+            return redirect('spotify_playlists:index')
+
+        else:
+            if user is not party.creator:
+                log.info("publish view: non creator requested publishing of party, redirected to index")
+                return redirect('spotify_playlists:index')
+            else:
+                # Crete the playlist
+                return HttpResponse("Not Implemented Yet")
 
 
 def log_out(request):
