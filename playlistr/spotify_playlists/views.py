@@ -65,6 +65,8 @@ def redirecter(request):
 
     else:
         # The user was trying to get somewhere but was not logged in
+        del request.session['post_login_url']
+        request.session.modified = True
         return redirect(destination)
 
 
