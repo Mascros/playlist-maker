@@ -112,3 +112,8 @@ def save_party(request):
 
 def publish(request):
     return HttpResponse("Not Implemented Yet")
+
+
+def log_out(request):
+    request.session.flush()
+    return redirect(reverse('spotify_playlists:index'))

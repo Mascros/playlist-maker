@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^start/$', views.start, name='start'),
     url(r'^save-party/$', views.save_party, name='save_party'),
     url(r'^testing/session/$', views.testing_session, name='testing_session'),
+    url(r'^log-out', views.log_out, name='log_out'),
     url(r'^publish/$', views.publish, name='publish')
 ]
