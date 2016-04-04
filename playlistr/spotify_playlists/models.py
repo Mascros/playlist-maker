@@ -30,6 +30,16 @@ class Party(models.Model):
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=64)
     users = models.ManyToManyField(User, related_name='users', related_query_name='user')
+    admins = models.ManyToManyField(User, related_name='admins', related_query_name='admin')
+
+    def get_for_context(self, request):
+        return {
+            'name': self.name,
+            'creator': self.creator.id,
+            'id': self.id,
+            'share_url': "http://" + request.get_host() + "/join/" + self.id,
+            'users': self.users.all()
+        }
 
     def __str__(self):
         return "<Party> with id: {}, creator {} and users {}".format(self.id, self.creator, self.users)
