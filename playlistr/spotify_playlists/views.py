@@ -55,7 +55,17 @@ def redirecter(request):
     u = User(**user)
     u.save()
     request.session['id'] = u.id
-    return render(request, 'spotify_playlists/logged_in.html')
+
+    try:
+        destination = request.session['post_login_url']
+
+    except KeyError:
+        # The user just logged in normally, just redirect to logged_in
+        return render(request, 'spotify_playlists/logged_in.html')
+
+    else:
+        # The user was trying to get somewhere but was not logged in
+        return redirect(destination)
 
 
 def join(request):
