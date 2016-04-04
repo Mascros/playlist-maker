@@ -9,5 +9,12 @@
         You can edit this? {{ editable }}
         The creator of {{ party.name }} is {{ party.creator }}.
     </p>
+    <a href="{% url 'spotify_playlists:publish' %}?partyid={{ party.id }}"><button id="publish" type="button" style="display: none;">Publish to spotify now!</button></a>
+    <script>
+        var publish = document.getElementById('publish');
+        if ({{ can_publish }}) {
+            publish.style.display = 'inline';
+        }
+    </script>
 </body>
 </html>
