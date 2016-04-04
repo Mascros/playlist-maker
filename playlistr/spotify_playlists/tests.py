@@ -180,7 +180,7 @@ class SavePartyViewHappyTests(TestCase):
         self.assertIn(b'Test Party', self.res.content)
 
     def test_party_is_editable(self):
-        self.assertIn(b'You can edit this? True', self.res.content)
+        self.assertIn(b'You can edit this? true', self.res.content)
 
     def publish_now_is_visible(self):
         self.assertIn(b'display: inline', self.res.content)
