@@ -9,6 +9,9 @@
         You can edit this? {{ editable }}
         The creator of {{ party.name }} is {{ party.creator }}.
     </p>
+    <p>
+        Share this party with this url: {{ party.share_url }}
+    </p>
     <a href="{% url 'spotify_playlists:publish' %}?partyid={{ party.id }}"><button id="publish" type="button" style="display: none;">Publish to spotify now!</button></a>
     <script>
         var publish = document.getElementById('publish');

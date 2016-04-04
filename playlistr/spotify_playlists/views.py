@@ -105,7 +105,8 @@ def save_party(request):
             'party': {
                 'name': party.name,
                 'creator': user_id,
-                'id': party_id
+                'id': party_id,
+                'share_url': request.get_host() + "/join/" + party_id
             },
             'editable': 'true',
             'can_publish': 'true'
