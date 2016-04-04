@@ -29,14 +29,7 @@ class Party(models.Model):
     last_used = models.DateTimeField()
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=64)
+    users = models.ManyToManyField(User, related_name='users', related_query_name='user')
 
     def __str__(self):
         return "<Party> with id: {}, creator {}".format(self.id, self.creator)
-
-
-class UserPartyJoin(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    party = models.ForeignKey(Party, on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return "<UserPartyJoin> between user id: {} and party id:{}".format(self.user.id, self.party.id)
