@@ -70,8 +70,49 @@ def redirecter(request):
         return redirect(destination)
 
 
-def join(request):
-    return HttpResponse("Not implemented yet")
+def join(request, party_id=None):
+    try:
+        if party_id is None:
+            party_id = request.POST.get('party_id')
+
+        user_id = request.session['id']
+        party = Party.objects.get(id=party_id)
+
+    except KeyError:
+        # User is not logged in, ask them to and then send back here
+        request.session['post_login_url'] = reverse('spotify_playlists:join', args=[party_id])
+        print(request.session['post_login_url'])
+        context = {
+            'spotify_auth_url': api.get_auth_request_url()
+        }
+        return render(request, 'spotify_playlists/log_in.html', context=context)
+
+    except Party.DoesNotExist:
+        context = {
+            'error_message': "The party you requested could not be found"
+        }
+        return render(request, 'spotify_playlists/logged_in.html', context=context)
+
+    else:
+        user = User.objects.get(id=user_id)
+
+        editable = False
+        can_publish = False
+        if user is party.creator:
+            editable = True
+            can_publish = True
+        elif user not in party.users.all():
+            party.users.add(user)
+
+        party.last_used = datetime.now()
+        party.save()
+
+        context = {
+            'party': party.get_for_context(request),
+            'editable': editable,
+            'can_publish': can_publish
+        }
+        return render(request, 'spotify_playlists/party.html', context=context)
 
 
 def start(request):
