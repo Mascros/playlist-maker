@@ -110,3 +110,7 @@ def save_party(request):
         }
 
         return render(request, 'spotify_playlists/party.html', context=context)
+
+
+def publish(request):
+    return HttpResponse("Not Implemented Yet")
