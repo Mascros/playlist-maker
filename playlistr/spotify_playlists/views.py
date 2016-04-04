@@ -104,9 +104,11 @@ def save_party(request):
         context = {
             'party': {
                 'name': party.name,
-                'creator': user_id
+                'creator': user_id,
+                'id': party_id
             },
-            'editable': True
+            'editable': 'true',
+            'can_publish': 'true'
         }
 
         return render(request, 'spotify_playlists/party.html', context=context)
