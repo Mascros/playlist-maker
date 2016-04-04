@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1><a href="{% url 'spotify_playlists:index' %}">Playlist Maker</a> - Join or Start</h1>
+<div id="error">{{ error_message }}</div>
 <div id="join">
     <h2>Join a party</h2>
     <form action="{% url 'spotify_playlists:join' %}" method="POST">
@@ -27,9 +28,7 @@
 <div id="manage">
     <h3>Manage your current parties</h3>
     <ol>
-        <li>Party</li>
-        <li>Top is next to happen</li>
-        <li>Based on start date</li>
+        <li><h3>TODO</h3></li>
     </ol>
 </div>
 </body>
