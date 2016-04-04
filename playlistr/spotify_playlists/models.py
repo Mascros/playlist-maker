@@ -32,4 +32,4 @@ class Party(models.Model):
     users = models.ManyToManyField(User, related_name='users', related_query_name='user')
 
     def __str__(self):
-        return "<Party> with id: {}, creator {}".format(self.id, self.creator)
+        return "<Party> with id: {}, creator {} and users {}".format(self.id, self.creator, self.users)
