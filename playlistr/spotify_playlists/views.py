@@ -46,6 +46,7 @@ def redirecter(request):
     code = request.GET.get('code')
 
     if code is None:
+        log.info("User at redirecter view, but without a code, redirected to index")
         return redirect(reverse('spotify_playlists:index'))
 
     user = api.get_login_tokens(code)
@@ -61,10 +62,12 @@ def redirecter(request):
 
     except KeyError:
         # The user just logged in normally, just redirect to logged_in
+        log.info("User with id {} logged in".format(u.id))
         return render(request, 'spotify_playlists/logged_in.html')
 
     else:
         # The user was trying to get somewhere but was not logged in
+        log.info("User with id {} logged in and redirected to {}".format(u.id, request.session['post_login_url']))
         del request.session['post_login_url']
         request.session.modified = True
         return redirect(destination)
@@ -73,21 +76,25 @@ def redirecter(request):
 def join(request, party_id=None):
     try:
         if party_id is None:
+            log.info("join via post request")
             party_id = request.POST.get('party_id')
+        else:
+            log.info("join via share url")
 
         user_id = request.session['id']
         party = Party.objects.get(id=party_id)
 
     except KeyError:
         # User is not logged in, ask them to and then send back here
+        log.info("user is not logged in, redirected to login with post_login_url")
         request.session['post_login_url'] = reverse('spotify_playlists:join', args=[party_id])
-        print(request.session['post_login_url'])
         context = {
             'spotify_auth_url': api.get_auth_request_url()
         }
         return render(request, 'spotify_playlists/log_in.html', context=context)
 
     except Party.DoesNotExist:
+        log.info("user logged in but party doesnt exist, redirected to logged in page")
         context = {
             'error_message': "The party you requested could not be found"
         }
@@ -101,7 +108,9 @@ def join(request, party_id=None):
         if user is party.creator:
             editable = True
             can_publish = True
+            log.info("Party creator tried to join own party")
         elif user not in party.users.all():
+            log.infor("User with id {} joined party with id {}".format(user_id, party_id))
             party.users.add(user)
 
         party.last_used = datetime.now()
@@ -160,6 +169,8 @@ def save_party(request):
             'can_publish': 'true'
         }
 
+        log.info("party with id {} created and saved in db".format(party_id))
+
         return render(request, 'spotify_playlists/party.html', context=context)
 
 
@@ -195,5 +206,6 @@ def publish(request):
 
 
 def log_out(request):
+    log.info("user with id {} logged out (session flushed)".format(request.session['id']))
     request.session.flush()
     return redirect(reverse('spotify_playlists:index'))
