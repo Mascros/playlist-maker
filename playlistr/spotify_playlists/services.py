@@ -1,3 +1,4 @@
+import boto3
 import requests as requests
 import json
 from spotify_playlists import models
@@ -85,3 +86,10 @@ class API:
             user.save()
         else:
             raise TypeError("user must be an instance of models.User")
+
+
+class AmazonHelper:
+    @staticmethod
+    def get_queue():
+        sqs = boto3.resource('sqs')
+        return sqs.get_queue_by_name(QueueName='playlists')

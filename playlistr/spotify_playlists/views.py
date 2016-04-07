@@ -2,14 +2,13 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from spotify_playlists.services import API
+from spotify_playlists.services import API, AmazonHelper
 from playlistr.settings import DEBUG
 from os import path
 from spotify_playlists.models import User, Party
 from django.utils.crypto import get_random_string
 from datetime import datetime
 import logging
-import boto3
 import json
 
 module_dir = path.dirname(__file__)
@@ -25,9 +24,7 @@ api = API(
 )
 
 log = logging.getLogger(__name__)
-
-sqs = boto3.resource('sqs')
-queue = sqs.get_queue_by_name(QueueName='playlists')
+queue = AmazonHelper.get_queue()
 
 
 def testing_session(request):
