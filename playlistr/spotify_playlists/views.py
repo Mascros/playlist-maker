@@ -9,6 +9,8 @@ from spotify_playlists.models import User, Party
 from django.utils.crypto import get_random_string
 from datetime import datetime
 import logging
+import boto3
+import json
 
 module_dir = path.dirname(__file__)
 file_path = path.join(module_dir, "secret.txt")
@@ -23,6 +25,9 @@ api = API(
 )
 
 log = logging.getLogger(__name__)
+
+sqs = boto3.resource('sqs')
+queue = sqs.get_queue_by_name(QueueName='playlists')
 
 
 def testing_session(request):
@@ -201,8 +206,10 @@ def publish(request):
                 log.info("publish view: non creator requested publishing of party, redirected to index")
                 return redirect('spotify_playlists:index')
             else:
-                # Crete the playlist
-                return HttpResponse("Not Implemented Yet")
+                data = json.dumps(party.get_for_publishing())
+                queue.send_message(MessageBody=data)
+                # Return a html page saying the playlist will appear in their account soon
+                return HttpResponse("Your playlist publication request has been recieved and should appear in your spotify account soon")
 
 
 def log_out(request):
