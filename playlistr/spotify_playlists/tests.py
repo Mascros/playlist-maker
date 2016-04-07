@@ -6,11 +6,12 @@ from django.test.utils import setup_test_environment
 from django.core.exceptions import FieldError
 from django.core.urlresolvers import reverse
 
-from spotify_playlists.services import API
+from spotify_playlists.services import API, AmazonHelper
 from .models import User
 
 setup_test_environment()
 client = Client()
+AmazonHelper.get_queue = MagicMock()
 
 
 class UserMethodTests(TestCase):
