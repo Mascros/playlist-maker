@@ -107,12 +107,12 @@ def join(request, party_id=None):
 
         editable = False
         can_publish = False
-        if user is party.creator:
+        if user.id == party.creator.id:
             editable = True
             can_publish = True
             log.info("Party creator tried to join own party")
         elif user not in party.users.all():
-            log.infor("User with id {} joined party with id {}".format(user_id, party_id))
+            log.info("User with id {} joined party with id {}".format(user_id, party_id))
             party.users.add(user)
 
         party.last_used = datetime.now()
