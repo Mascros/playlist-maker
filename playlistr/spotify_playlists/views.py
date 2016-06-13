@@ -206,7 +206,8 @@ def publish(request):
                 data = json.dumps(party.get_for_publishing())
                 queue.send_message(MessageBody=data)
                 # Return a html page saying the playlist will appear in their account soon
-                return HttpResponse("Your playlist publication request has been recieved and should appear in your spotify account soon")
+                return HttpResponse("Your playlist publication request has been received"
+                                    "and should appear in your spotify account soon")
 
 
 def log_out(request):
