@@ -6,11 +6,11 @@ from playlistr.settings import DEBUG
 from spotify_playlists.models import User, Party
 from django.utils.crypto import get_random_string
 from datetime import datetime
-from common import get_api
+from common import APIFactory, AmazonHelper
 import logging
 import json
 
-api = get_api()
+api = APIFactory.get_api()
 log = logging.getLogger(__name__)
 queue = AmazonHelper.get_queue()
 

@@ -44,7 +44,10 @@ class API:
         }
         r = requests.post("https://accounts.spotify.com/api/token", data=data, headers=headers)
         body = json.loads(r.text)
-        expiry = datetime.now() + timedelta(seconds=body['expires_in']-2)  # -2 to be safe, as time will have passed
+
+        expiry = datetime.now() + timedelta(seconds=body['expires_in'] - 2)
+        # -2 to be safe, as time will have passed
+
         result = {
             "access_token": body['access_token'],
             "refresh_token": body['refresh_token'],
@@ -60,7 +63,7 @@ class API:
         :return: Dict - The data returned by the API
         """
         headers = {
-               "Authorization": "Bearer " + access_token
+            "Authorization": "Bearer " + access_token
         }
         r = requests.get("https://api.spotify.com/v1/me", headers=headers)
         return json.loads(r.text)
@@ -82,24 +85,33 @@ class API:
             r = requests.post("https://accounts.spotify.com/api/token", data=data, headers=headers)
             r = json.loads(r.text)
             user.access_token = r['access_token']
-            user.token_expiry = datetime.now() + timedelta(seconds=r['expires_in']-2)
+            user.token_expiry = datetime.now() + timedelta(seconds=r['expires_in'] - 2)
             user.save()
         else:
             raise TypeError("user must be an instance of models.User")
 
-api = None
-def get_api():
-    if api is None:    
-        module_dir = path.dirname(__file__)
-        file_path = path.join(module_dir, "secret.txt")
-        f = open(file_path, "r")
-        client_secret = f.readline()
-        f.close()
-        api = API(
-            "38c7aa7c8b0a4172aa46a5b7833b8454",
-            client_secret,
-            "user-read-private user-read-email",
-            "http://127.0.0.1:8000/redirect"
-        )
-        
-    return api
+
+class APIFactory:
+    api = None
+
+    @classmethod
+    def get_api(cls):
+        if cls.api is None:
+            module_dir = path.dirname(__file__)
+            file_path = path.join(module_dir, "secret.txt")
+            f = open(file_path, "r")
+            client_secret = f.readline()
+            f.close()
+            cls.api = API(
+                "38c7aa7c8b0a4172aa46a5b7833b8454",
+                client_secret,
+                "user-read-private user-read-email",
+                "http://127.0.0.1:8000/redirect"
+            )
+
+        return cls.api
+
+
+class AmazonHelper:
+    def get_queue(self):
+        pass
