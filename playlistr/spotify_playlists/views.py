@@ -2,12 +2,12 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from spotify_playlists.services import API, AmazonHelper
 from playlistr.settings import DEBUG
 from os import path
 from spotify_playlists.models import User, Party
 from django.utils.crypto import get_random_string
 from datetime import datetime
+import common.api
 import logging
 import json
 

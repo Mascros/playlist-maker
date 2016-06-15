@@ -41,24 +41,8 @@ class Party(models.Model):
             'users': self.users.all()
         }
 
-    def get_for_publishing(self):
-        data = {
-            'target_no_songs': self.target_no_songs,
-            'creator': {
-                'access_token': self.creator.access_token,
-                'refresh_token': self.creator.refresh_token,
-                'token_expiry': self.creator.token_expiry.ctime()
-            },
-            'members': []
-        }
-        for member in self.users.all():
-            data['members'].append({
-                'access_token': member.access_token,
-                'refresh_token': member.refresh_token,
-                'token_expiry': member.token_expiry.ctime()
-            })
-
-        return data
+    def get_all_members(self):
+        return [self.creator] + self.users
 
     def __str__(self):
         return "<Party> with id: {}, creator {} and users {}".format(self.id, self.creator, self.users)
