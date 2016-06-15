@@ -3,26 +3,14 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from playlistr.settings import DEBUG
-from os import path
 from spotify_playlists.models import User, Party
 from django.utils.crypto import get_random_string
 from datetime import datetime
-import common.api
+from common import get_api
 import logging
 import json
 
-module_dir = path.dirname(__file__)
-file_path = path.join(module_dir, "secret.txt")
-f = open(file_path, "r")
-client_secret = f.readline()
-f.close()
-api = API(
-    "38c7aa7c8b0a4172aa46a5b7833b8454",
-    client_secret,
-    "user-read-private user-read-email",
-    "http://127.0.0.1:8000/redirect"
-)
-
+api = get_api()
 log = logging.getLogger(__name__)
 queue = AmazonHelper.get_queue()
 
