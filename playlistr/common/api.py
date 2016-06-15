@@ -1,10 +1,10 @@
-import boto3
 import requests as requests
 import json
 from spotify_playlists import models
 from urllib.parse import urlencode
 from base64 import b64encode
 from datetime import datetime, timedelta
+from os import path
 
 
 class API:
@@ -87,9 +87,9 @@ class API:
         else:
             raise TypeError("user must be an instance of models.User")
 
-class APIFactory():
-    @staticmethod
-    def get_api():
+api = None
+def get_api():
+    if api is None:    
         module_dir = path.dirname(__file__)
         file_path = path.join(module_dir, "secret.txt")
         f = open(file_path, "r")
@@ -101,4 +101,5 @@ class APIFactory():
             "user-read-private user-read-email",
             "http://127.0.0.1:8000/redirect"
         )
-        return api
+        
+    return api
