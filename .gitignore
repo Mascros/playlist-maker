@@ -90,4 +90,4 @@ playlistr/.idea/
 
 playlistr/db.sqlite3
 
-playlistr/spotify_playlists/secret.txt
+playlistr/common/secret.txt
