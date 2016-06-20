@@ -6,7 +6,7 @@ from django.test.utils import setup_test_environment
 from django.core.exceptions import FieldError
 from django.core.urlresolvers import reverse
 
-from common.api import SpotifyAPI
+from common.spotifyapi import SpotifyAPI
 from .models import User
 
 setup_test_environment()
