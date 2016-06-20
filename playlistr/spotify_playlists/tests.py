@@ -6,12 +6,11 @@ from django.test.utils import setup_test_environment
 from django.core.exceptions import FieldError
 from django.core.urlresolvers import reverse
 
-from common.api import API, AmazonHelper
+from common.api import SpotifyAPI
 from .models import User
 
 setup_test_environment()
 client = Client()
-AmazonHelper.get_queue = MagicMock()
 
 
 class UserMethodTests(TestCase):
@@ -67,13 +66,13 @@ class RedirectViewLoggedInTests(TestCase):
             'access_token': "token",
             'token_expiry': datetime.max
         }
-        API.get_login_tokens = MagicMock(return_value=user)
+        SpotifyAPI.get_login_tokens = MagicMock(return_value=user)
 
         profile = {
             'email': 'test@example.com',
             'id': 'test_user_id'
         }
-        API.get_current_user_profile = MagicMock(return_value=profile)
+        SpotifyAPI.get_current_user_profile = MagicMock(return_value=profile)
         self.res = client.get(reverse('spotify_playlists:redirect') + "?code=123xyz")
 
     def test_status_code(self):

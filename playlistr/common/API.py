@@ -110,8 +110,3 @@ class SpotifyAPIFactory:
             )
 
         return cls.api
-
-
-class AmazonHelper:
-    def get_queue(self):
-        pass

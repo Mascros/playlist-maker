@@ -6,13 +6,12 @@ from playlistr.settings import DEBUG
 from spotify_playlists.models import User, Party
 from django.utils.crypto import get_random_string
 from datetime import datetime
-from common.api import APIFactory, AmazonHelper
+from common.api import SpotifyAPIFactory
 import logging
 import json
 
-api = APIFactory.get_api()
+api = SpotifyAPIFactory.get_api()
 log = logging.getLogger(__name__)
-queue = AmazonHelper.get_queue()
 
 
 def testing_session(request):
@@ -192,7 +191,7 @@ def publish(request):
                 return redirect('spotify_playlists:index')
             else:
                 data = json.dumps(party.get_for_publishing())
-                queue.send_message(MessageBody=data)
+                # queue.send_message(MessageBody=data)
                 # Return a html page saying the playlist will appear in their account soon
                 return HttpResponse("Your playlist publication request has been received"
                                     "and should appear in your spotify account soon")
