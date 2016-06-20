@@ -6,7 +6,7 @@ from django.test.utils import setup_test_environment
 from django.core.exceptions import FieldError
 from django.core.urlresolvers import reverse
 
-from spotify_playlists.services import API, AmazonHelper
+from common.api import API, AmazonHelper
 from .models import User
 
 setup_test_environment()
@@ -185,4 +185,3 @@ class SavePartyViewHappyTests(TestCase):
 
     def publish_now_is_visible(self):
         self.assertIn(b'display: inline', self.res.content)
-
