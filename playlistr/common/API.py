@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from os import path
 
 
-class API:
+class SpotifyAPI:
     def __init__(self, client_id, client_secret, scope, redirect_uri):
         self._client_id = client_id
         self._client_secret = client_secret
@@ -60,7 +60,7 @@ class API:
         """
         Get the profile object for the current user
         :param access_token: the access_token for the user
-        :return: Dict - The data returned by the API
+        :return: Dict - The data returned by the SpotifyAPI
         """
         headers = {
             "Authorization": "Bearer " + access_token
@@ -91,7 +91,7 @@ class API:
             raise TypeError("user must be an instance of models.User")
 
 
-class APIFactory:
+class SpotifyAPIFactory:
     api = None
 
     @classmethod
@@ -102,7 +102,7 @@ class APIFactory:
             f = open(file_path, "r")
             client_secret = f.readline()
             f.close()
-            cls.api = API(
+            cls.api = SpotifyAPI(
                 "38c7aa7c8b0a4172aa46a5b7833b8454",
                 client_secret,
                 "user-read-private user-read-email",
