@@ -1,17 +1,20 @@
 # Playlist Maker [![Build Status](https://travis-ci.org/RobinStephenson/playlist-maker.svg?branch=master)](https://travis-ci.org/RobinStephenson/playlist-maker)
 A new and improved version of the site I made for my A Level computing project but (hopefully) better.
 
-- User signs in with their spotify account
-- Can join a party or Can start a party, choosing a name and how many songs it should contain
-- If they choose to start a party they are given a 8 char Party ID which others can use to join, as well as a link which looks like http://example.com/join/partyidgoeshere which they can share
-- When a user joins a party the creator can give them admin rights. This lets them kick other users from the party, change the number of songs etc.
-- The creator can press a button to publish the playlist to their spotify account
-
-## Tests
-To run tests do:
+## Quick Look
+A playlist creation tool for Spotify. Users can sign in with their Spotify account and have a playlist created for them and their freinds.
 ```
-./manage.py test
-```
+-playlist-maker
+    -playlists
+        -builder
+            Consumes playlist creation requests from a queue. 
+            Does the actual track selection and sends the playlist to Spotify.
+        -front
+            Handles the actual users requests.
+            Gets information about the user from the Spotify API.
+            Adds playlist creation requests to the queue for the user.
+        -playlists
+            Django Configs
 
-## Contributing
-Pull requests are welcome. But please try and increase test coverage with every pull request!
+The queue is Amazon SQS.
+```
