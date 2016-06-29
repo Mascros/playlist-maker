@@ -85,9 +85,6 @@ target/
 # pyenv
 .python-version
 
-playlistr/.idea/
+.idea/
 
-
-playlistr/db.sqlite3
-
-playlistr/common/secret.txt
+playlists/db.sqlite3
