@@ -4,6 +4,7 @@ A new and improved version of the site I made for my A Level computing project b
 ## Quick Look
 A playlist creation tool for Spotify. Users can sign in with their Spotify account and have a playlist created for them and their freinds.
 ```
+Directory structure:
 -playlist-maker
     -playlists
         -builder
