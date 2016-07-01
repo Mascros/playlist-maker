@@ -88,3 +88,4 @@ target/
 .idea/
 
 playlists/db.sqlite3
+playlists/api/secret.txt
