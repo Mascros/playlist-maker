@@ -8,11 +8,17 @@ from os import path
 
 
 class SpotifyAPI:
-    def __init__(self, client_id, client_secret, scope, redirect_uri):
-        self._client_id = client_id
+    def __init__(self):
+        module_dir = path.dirname(__file__)
+        file_path = path.join(module_dir, "secret.txt")
+        f = open(file_path, "r")
+        client_secret = f.readline()
+        f.close()
+
+        self._client_id = "38c7aa7c8b0a4172aa46a5b7833b8454"
         self._client_secret = client_secret
-        self._scope = scope
-        self._redirect_uri = redirect_uri
+        self._scope = "user-read-private user-read-email user-library-read"
+        self._redirect_uri = "http://127.0.0.1:8000/redirect"
         self._auth = "Basic %s" % b64encode(str(self._client_id + ":" + self._client_secret).encode()).decode()
 
     def get_auth_request_url(self):
@@ -89,24 +95,3 @@ class SpotifyAPI:
             user.save()
         else:
             raise TypeError("user must be an instance of models.User")
-
-
-class SpotifyAPIFactory:
-    api = None
-
-    @classmethod
-    def get_api(cls):
-        if cls.api is None:
-            module_dir = path.dirname(__file__)
-            file_path = path.join(module_dir, "secret.txt")
-            f = open(file_path, "r")
-            client_secret = f.readline()
-            f.close()
-            cls.api = SpotifyAPI(
-                "38c7aa7c8b0a4172aa46a5b7833b8454",
-                client_secret,
-                "user-read-private user-read-email",
-                "http://127.0.0.1:8000/redirect"
-            )
-
-        return cls.api
