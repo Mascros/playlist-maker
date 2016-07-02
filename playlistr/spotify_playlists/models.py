@@ -19,6 +19,14 @@ class User(models.Model):
             else:
                 return True
 
+    def get_for_publishing(self):
+        data = {
+            'access_token': self.access_token,
+            'refresh_token': self.refresh_token,
+            'token_expiry': self.token_expiry
+        }
+        return data
+
     def __str__(self):
         return "<User> with id: {}, email {}, tok_exp {}".format(self.id, self.spotify_email, self.token_expiry)
 
@@ -41,8 +49,14 @@ class Party(models.Model):
             'users': self.users.all()
         }
 
-    def get_all_members(self):
-        return [self.creator] + self.users
+    def get_for_publishing(self):
+        data = {
+            'target_no_songs': self.target_no_songs,
+            # All data about creator is sent so it is possible to email them when their playlist has been published
+            'creator': self.creator,
+            'users': [user.get_for_publishing() for user in self.users]
+        }
+        return data
 
     def __str__(self):
         return "<Party> with id: {}, creator {} and users {}".format(self.id, self.creator, self.users)
