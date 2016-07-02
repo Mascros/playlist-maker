@@ -6,11 +6,12 @@ from playlistr.settings import DEBUG
 from spotify_playlists.models import User, Party
 from django.utils.crypto import get_random_string
 from datetime import datetime
-from common.spotifyapi import SpotifyAPIFactory
+from common.spotifyapi import SpotifyAPI
 import logging
 import json
 
-api = SpotifyAPIFactory.get_api()
+
+api = SpotifyAPI()
 log = logging.getLogger(__name__)
 
 
