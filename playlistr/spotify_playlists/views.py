@@ -1,3 +1,4 @@
+import boto3
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -13,6 +14,7 @@ import json
 
 api = SpotifyAPI()
 log = logging.getLogger(__name__)
+queue = boto3.resource('sqs').get_queue_by_name(QueueName='playlists')
 
 
 def testing_session(request):
@@ -194,8 +196,7 @@ def publish(request):
                 return redirect('spotify_playlists:index')
             else:
                 data = json.dumps(party.get_for_publishing())
-                # queue.send_message(MessageBody=data)
-                # Return a html page saying the playlist will appear in their account soon
+                queue.send_message(MessageBody=data)
                 return HttpResponse("Your playlist publication request has been received"
                                     "and should appear in your spotify account soon")
 
