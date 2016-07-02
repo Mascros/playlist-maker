@@ -125,7 +125,9 @@ def start(request):
 
     else:
         party_id = get_random_string(length=8)
-        log.info("User_id '{}' starting party with name '{}' and party_id '{}' ".format(user_id, party_name, party_id))
+        log.info(
+            "User_id '{}' starting party with name '{}' and party_id '{}' ".format(user_id, party_name, party_id)
+        )
         context = {
             "party_name": party_name,
             "party_id": party_id
