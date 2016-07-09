@@ -50,10 +50,13 @@ class Party(models.Model):
         }
 
     def get_for_publishing(self):
+        # Additional fields for the creator so that they can be emailed when playlist is ready
+        creator = self.creator.get_for_publishing()
+        creator['id'] = self.creator.id
+        creator['spotify_email'] = self.creator.spotify_email
         data = {
             'target_no_songs': self.target_no_songs,
-            # All data about creator is sent so it is possible to email them when their playlist has been published
-            'creator': self.creator,
+            'creator': creator,
             'users': [user.get_for_publishing() for user in self.users]
         }
         return data
