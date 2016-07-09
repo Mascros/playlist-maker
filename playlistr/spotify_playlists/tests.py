@@ -1,11 +1,9 @@
 from datetime import datetime
 from unittest.mock import MagicMock
-
 from django.test import TestCase, Client
 from django.test.utils import setup_test_environment
 from django.core.exceptions import FieldError
 from django.core.urlresolvers import reverse
-
 from common.spotifyapi import SpotifyAPI
 from .models import User
 
