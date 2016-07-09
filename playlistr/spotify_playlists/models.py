@@ -55,6 +55,8 @@ class Party(models.Model):
         creator['id'] = self.creator.id
         creator['spotify_email'] = self.creator.spotify_email
         data = {
+            # Include name so that in the email the ready playlist can be named
+            'name': self.name,
             'target_no_songs': self.target_no_songs,
             'creator': creator,
             'users': [user.get_for_publishing() for user in self.users]
