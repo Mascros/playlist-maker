@@ -50,10 +50,15 @@ class Party(models.Model):
         }
 
     def get_for_publishing(self):
+        """
+        get a description of the playlist in a format for sending to be published
+        :return: dictionary object
+        """
         # Additional fields for the creator so that they can be emailed when playlist is ready
         creator = self.creator.get_for_publishing()
         creator['id'] = self.creator.id
         creator['spotify_email'] = self.creator.spotify_email
+
         data = {
             # Include name so that in the email the ready playlist can be named
             'name': self.name,
