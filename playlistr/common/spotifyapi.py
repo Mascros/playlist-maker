@@ -17,7 +17,8 @@ class SpotifyAPI:
 
         self._client_id = "38c7aa7c8b0a4172aa46a5b7833b8454"
         self._client_secret = client_secret
-        self._scope = "user-read-private user-read-email user-library-read"
+        self._scope = ("user-read-private user-read-email user-library-read"
+                       "playlist-modify-public playlist-modify-private")
         self._redirect_uri = "http://127.0.0.1:8000/redirect"
         self._auth = "Basic %s" % b64encode(str(self._client_id + ":" + self._client_secret).encode()).decode()
 
