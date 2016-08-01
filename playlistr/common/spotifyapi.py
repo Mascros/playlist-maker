@@ -75,6 +75,31 @@ class SpotifyAPI:
         r = requests.get("https://api.spotify.com/v1/me", headers=headers)
         return json.loads(r.text)
 
+    @staticmethod
+    def get_user_saved_tracks(access_token):
+        """
+        Get the tracks the user has saved
+        :param access_token: up to date access token for the user
+        :return: list of the users saved tracks
+        """
+        headers = {
+            "Authorization": "Bearer " + access_token
+        }
+        url = "https://api.spotify.com/v1/me/tracks"
+        tracks = []
+        while url is not None:
+            # while there are tracks still to be fetched
+            r = json.loads(requests.get(url, headers=headers).text)
+
+            # add tracks to list
+            tracks.append(r.items)
+
+            # r.next has the url for the next (up to 20) tracks.
+            # If there are no tracks r.next is None
+            url = r.next
+
+        return tracks
+
     def update_user_token(self, user):
         """
         Update the access_token and token_expiry for a given user
