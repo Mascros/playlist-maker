@@ -122,7 +122,8 @@ class SpotifyAPI:
         else:
             raise TypeError("user must be an instance of models.User")
 
-    def create_playlist(self, user_id, access_token, name):
+    @staticmethod
+    def create_playlist(user_id, access_token, name):
         """
         Create a playlists in the users spotify account
         :param user_id: The id for the user
