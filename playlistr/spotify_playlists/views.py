@@ -1,4 +1,5 @@
 import boto3
+from os import environ
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -14,7 +15,18 @@ import json
 
 api = SpotifyAPI()
 log = logging.getLogger(__name__)
-queue = boto3.resource('sqs').get_queue_by_name(QueueName='playlists')
+
+
+try:
+    ci = environ['CONTINUOUS_INTEGRATION']
+
+except KeyError:
+    log.info("Environment is not CI")
+    queue = boto3.resource('sqs').get_queue_by_name(QueueName='playlists')
+
+else:
+    log.info("Environment is CI")
+    queue = {}
 
 
 def testing_session(request):
