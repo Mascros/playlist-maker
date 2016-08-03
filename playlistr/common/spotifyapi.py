@@ -158,3 +158,20 @@ class SpotifyAPI:
         uri_csv.rstrip(",")
         return uri_csv
 
+    def add_tracks_to_playlist(self, user_id, access_token, playlist_id, track_ids):
+        """
+        Add the given tracks to the playlist of the given user
+        :param user_id: ID of the user to whom the playlist belongs
+        :param access_token: A valid access token for the user
+        :param playlist_id: ID of the playlist to which the tracks should be added
+        :param track_ids: A list of track IDs to be added to the playlist. Max 100
+        """
+        url = "https://api.spotify.com/v1/users/{}/playlists/{}/tracks".format(user_id, playlist_id)
+        headers = {
+            "Authorization": access_token,
+            "Content-Type": "application/json"
+        }
+        data = {
+            "uris": self._track_ids_to_uri_csv(track_ids)
+        }
+        requests.post(url, headers=headers, data=data)
