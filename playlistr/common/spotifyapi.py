@@ -151,8 +151,8 @@ class SpotifyAPI:
         :return: CSV str of URIs for the tracks
         """
         uri_csv = ""
-        for id in track_ids:
-            uri_csv += "spotify:track:{},".format(id)
+        for track_id in track_ids:
+            uri_csv += "spotify:track:{},".format(track_id)
 
         # remove the final comma so that its valid CSV
         uri_csv.rstrip(",")
