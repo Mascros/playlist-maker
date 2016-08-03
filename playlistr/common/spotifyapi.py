@@ -142,3 +142,19 @@ class SpotifyAPI:
         }
         r = json.loads(requests.post(url, headers=headers, data=data).text)
         return r['id']
+
+    @staticmethod
+    def _track_ids_to_uri_csv(track_ids):
+        """
+        Takes a list of Track IDs and returns a CSV string of track URIs
+        :param track_ids: list of track ids
+        :return: CSV str of URIs for the tracks
+        """
+        uri_csv = ""
+        for id in track_ids:
+            uri_csv += "spotify:track:{},".format(id)
+
+        # remove the final comma so that its valid CSV
+        uri_csv.rstrip(",")
+        return uri_csv
+
