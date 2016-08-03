@@ -121,3 +121,23 @@ class SpotifyAPI:
             user.save()
         else:
             raise TypeError("user must be an instance of models.User")
+
+    def create_playlist(self, user_id, access_token, name):
+        """
+        Create a playlists in the users spotify account
+        :param user_id: The id for the user
+        :param access_token: A valid access token for the user
+        :param name: The name of the playlist
+        :return: The playlist ID
+        """
+        url = "https://api.spotify.com/v1/users/{}/playlists".format(user_id)
+        headers = {
+            "Authorization": access_token,
+            "Content-Type": "application/json"
+        }
+        data = {
+            "name": name,
+            "public": True
+        }
+        r = json.loads(requests.post(url, headers=headers, data=data).text)
+        return r['id']
