@@ -1,4 +1,5 @@
-class ScoreBonuses:
-    TRACK = 100
-    ALBUM = 50
-    ARTISTS = 40
+score_bonuses = {
+    'TRACK': 100
+    'ALBUM': 50
+    'ARTIST': 40
+}
