@@ -5,4 +5,4 @@ class MessageReceiver:
 
     def get_messages(self):
         received = self._service.receive_messages()
-        return [self._Message(message, message.delete) for message in received]
+        return [self._Message(message.body, message.delete) for message in received]
