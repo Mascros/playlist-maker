@@ -10,7 +10,7 @@ class TestSelectionTrack(TestCase):
 
     def test_get_id(self):
         """get_id should return the spotify id of the track"""
-        self.assertEquals(self.track.get_id(), '1XjKmqLHqnzNLYqYSRBIZK')
+        self.assertEquals(self.track.get_id(), 'song1')
 
     def test_get_score(self):
         """get_score should return the current score of the track
@@ -22,11 +22,11 @@ class TestSelectionTrack(TestCase):
     def test_get_artist_ids(self):
         """get_artist_ids should return the ids of the artists on a track"""
         # only one artist on the test track
-        self.assertEquals(self.track.get_artist_ids(), ['3Z02hBLubJxuFJfhacLSDc'])
+        self.assertEquals(self.track.get_artist_ids(), ['artist1'])
 
     def test_get_album(self):
         """get_album should return the id of the album of the track"""
-        self.assertEquals(self.track.get_album_id(), '4kbE34G5bxaxwuCqz0NEw4')
+        self.assertEquals(self.track.get_album_id(), 'album1')
 
     def test_match_track_bonus(self):
         """match should return the score bonus for the tracks being compared

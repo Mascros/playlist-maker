@@ -38,17 +38,17 @@ class SelectionTrack:
         self._score += bonus
 
     @staticmethod
-    def get_testing_instance():
+    def get_testing_instance(album="album1", artist="artist1", song="song1", pop=43):
         test_track = {
             "album": {
-                "id": "4kbE34G5bxaxwuCqz0NEw4"
+                "id": album
             },
             "artists": [
                 {
-                    "id": "3Z02hBLubJxuFJfhacLSDc"
+                    "id": artist
                 }
             ],
-            "id": "1XjKmqLHqnzNLYqYSRBIZK",
-            "popularity": 43
+            "id": song,
+            "popularity": pop
         }
         return SelectionTrack(test_track)
