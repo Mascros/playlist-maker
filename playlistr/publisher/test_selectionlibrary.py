@@ -3,39 +3,39 @@ from publisher.selectionlibrary import SelectionLibrary
 from publisher.selectiontrack import SelectionTrack
 
 test_track = {
-        "album": {
-          "album_type": "album",
-          "available_markets": [
-            "AD",
-            "AR",
-            "AT",
-            "TR",
-            "TW",
-            "UY"
-          ],
-          "external_urls": {
-            "spotify": "https://open.spotify.com/album/4kbE34G5bxaxwuCqz0NEw4"
-          },
-          "href": "https://api.spotify.com/v1/albums/4kbE34G5bxaxwuCqz0NEw4",
-          "id": "4kbE34G5bxaxwuCqz0NEw4",
-          "name": "The Best Of Me",
-          "type": "album",
-          "uri": "spotify:album:4kbE34G5bxaxwuCqz0NEw4"
-        },
-        "artists": [
-            {
-                "id": "3Z02hBLubJxuFJfhacLSDc"
-            }
-        ],
-        "href": "https://api.spotify.com/v1/tracks/1XjKmqLHqnzNLYqYSRBIZK",
-        "id": "1XjKmqLHqnzNLYqYSRBIZK",
-        "name": "Back To You - MTV Unplugged Version",
-        "popularity": 43,
-        "preview_url": "https://p.scdn.co/mp3-preview/abeb349e0ea95846b4e4e01b115fcdbd5e9a991a",
-        "track_number": 11,
-        "type": "track",
-        "uri": "spotify:track:1XjKmqLHqnzNLYqYSRBIZK"
-      }
+    "album": {
+      "album_type": "album",
+      "available_markets": [
+        "AD",
+        "AR",
+        "AT",
+        "TR",
+        "TW",
+        "UY"
+      ],
+      "external_urls": {
+        "spotify": "https://open.spotify.com/album/4kbE34G5bxaxwuCqz0NEw4"
+      },
+      "href": "https://api.spotify.com/v1/albums/4kbE34G5bxaxwuCqz0NEw4",
+      "id": "4kbE34G5bxaxwuCqz0NEw4",
+      "name": "The Best Of Me",
+      "type": "album",
+      "uri": "spotify:album:4kbE34G5bxaxwuCqz0NEw4"
+    },
+    "artists": [
+        {
+            "id": "3Z02hBLubJxuFJfhacLSDc"
+        }
+    ],
+    "href": "https://api.spotify.com/v1/tracks/1XjKmqLHqnzNLYqYSRBIZK",
+    "id": "1XjKmqLHqnzNLYqYSRBIZK",
+    "name": "Back To You - MTV Unplugged Version",
+    "popularity": 43,
+    "preview_url": "https://p.scdn.co/mp3-preview/abeb349e0ea95846b4e4e01b115fcdbd5e9a991a",
+    "track_number": 11,
+    "type": "track",
+    "uri": "spotify:track:1XjKmqLHqnzNLYqYSRBIZK"
+}
 
 class TestSelectionLibraryInit(TestCase):
     def test_invalid_tracks(self):
