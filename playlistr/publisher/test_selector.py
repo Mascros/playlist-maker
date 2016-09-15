@@ -21,10 +21,10 @@ for i in range(6):
     tracks.append(track)
 
 
-libraries = (
+libraries = [
     SelectionLibrary(tracks[0:4]),
     SelectionLibrary(tracks[2:6])
-)
+]
 request = {
     'target_no_songs': 3,
     'libraries': libraries
