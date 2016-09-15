@@ -33,7 +33,7 @@ class SelectionTrack:
 
     def add_to_score(self, bonus):
         if bonus not in score_bonuses.values():
-            raise ValueError("bonus is not a valid value")
+            raise ValueError("{} is not a valid value for bonus".format(bonus))
 
         self._score += bonus
 
