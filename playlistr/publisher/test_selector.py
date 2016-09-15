@@ -69,3 +69,24 @@ class TestSelector(TestCase):
                 self.fail()
             else:
                 seen.append(track)
+
+    def test_get_highest_scores_quantity(self):
+        """should return the correct number of tracks"""
+        for no_expected in range(1, 5):
+            no_returned = len(self.selector._get_highest_scores(libraries, no_expected))
+            self.assertEqual(no_returned, no_expected)
+
+    def test_get_highest_scores(self):
+        """should return the tracks with the highest score
+        
+        tracks with indices 2 and 3 are in both libs so should be returned.
+        the higher the index the higher the popularity,
+        so later indices should be returned otherwise.
+        Do not need to be returned in order.
+        """
+        highest = self.selector._get_highest_scores(libraries, 3)
+        self.assertIs(type(highest), list)
+        self.assertIs(type(highest[0]), str)
+        self.assertIn(tracks[2]['id'], highest)
+        self.assertIn(tracks[3]['id'], highest)
+        self.assertIn(tracks[5]['id'], highest)
