@@ -59,14 +59,14 @@ class TestSelector(TestCase):
         universal = set(libraries[0].get_tracks() + libraries[1].get_tracks())
         for track in self.tracks:
             if track not in universal:
-                self.fail()
+                self.fail("{} not found in {}".format(track, universal))
 
     def test_choose_tracks_no_duplicates(self):
         """returned tracks should not invclude any duplicates"""
         seen = []
         for track in self.tracks:
             if track in seen:
-                self.fail()
+                self.fail("duplicate tracks in {}".format(self.tracks))
             else:
                 seen.append(track)
 
