@@ -7,7 +7,7 @@ class SelectionTrack:
         self._id = track['id']
         self._album_id = track['album']['id']
         self._artist_ids = [artist['id'] for artist in track['artists']]
-        self._score = track['popularity']
+        self._popularity = track['popularity']
 
     def get_id(self):
         return self._id
@@ -18,8 +18,8 @@ class SelectionTrack:
     def get_artist_ids(self):
         return self._artist_ids
 
-    def get_score(self):
-        return self._score
+    def get_popularity(self):
+        return self._popularity
 
     def match(self, other_track):
         if self.get_id() == other_track.get_id():
@@ -30,12 +30,6 @@ class SelectionTrack:
             return score_bonuses['ARTIST']
         else:
             return 0
-
-    def add_to_score(self, bonus):
-        if bonus not in score_bonuses.values():
-            raise ValueError("{} is not a valid value for bonus".format(bonus))
-
-        self._score += bonus
 
     @staticmethod
     def get_testing_instance(album="album1", artist="artist1", song="song1", pop=43):

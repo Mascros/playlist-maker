@@ -12,13 +12,6 @@ class TestSelectionTrack(TestCase):
         """get_id should return the spotify id of the track"""
         self.assertEquals(self.track.get_id(), 'song1')
 
-    def test_get_score(self):
-        """get_score should return the current score of the track
-
-        should default to the popularity score, which is 43 in the test track
-        """
-        self.assertEquals(self.track.get_score(), 43)
-
     def test_get_artist_ids(self):
         """get_artist_ids should return the ids of the artists on a track"""
         # only one artist on the test track
@@ -45,15 +38,3 @@ class TestSelectionTrack(TestCase):
         track2._album_id = ""
         track2._artist_ids = [""]
         self.assertEquals(self.track.match(track2), 0)
-    def test_add_to_score_invalid(self):
-        """add_to_score should raise a value error for invalid bonuses"""
-        track = SelectionTrack.get_testing_instance()
-        with self.assertRaises(ValueError):
-            track.add_to_score(12)
-
-    def test_add_to_score(self):
-        """add_to_score should updated the tracks score if its a valid bonus"""
-        track = SelectionTrack.get_testing_instance()
-        previous_score = track.get_score()
-        track.add_to_score(score_bonuses['ALBUM'])
-        self.assertEquals(track.get_score(), previous_score + score_bonuses['ALBUM'])
