@@ -56,7 +56,8 @@ class TestSelector(TestCase):
 
     def test_choose_tracks_subset(self):
         """should return a subset of all members tracks"""
-        universal = set(libraries[0].get_tracks() + libraries[1].get_tracks())
+        all_tracks = libraries[0].get_tracks() + libraries[1].get_tracks()
+        universal = set([track.get_id() for track in all_tracks])
         for track in self.tracks:
             if track not in universal:
                 self.fail("{} not found in {}".format(track, universal))
@@ -70,13 +71,7 @@ class TestSelector(TestCase):
             else:
                 seen.append(track)
 
-    def test_get_highest_scores_quantity(self):
-        """should return the correct number of tracks"""
-        for no_expected in range(1, 5):
-            no_returned = len(self.selector._get_highest_scores(libraries, no_expected))
-            self.assertEqual(no_returned, no_expected)
-
-    def test_get_highest_scores(self):
+    def test_choose_tracks_selection(self):
         """should return the tracks with the highest score
         
         tracks with indices 2 and 3 are in both libs so should be returned.
@@ -84,9 +79,6 @@ class TestSelector(TestCase):
         so later indices should be returned otherwise.
         Do not need to be returned in order.
         """
-        highest = self.selector._get_highest_scores(libraries, 3)
-        self.assertIs(type(highest), list)
-        self.assertIs(type(highest[0]), str)
-        self.assertIn(tracks[2]['id'], highest)
-        self.assertIn(tracks[3]['id'], highest)
-        self.assertIn(tracks[5]['id'], highest)
+        self.assertIn(tracks[2]['id'], self.tracks)
+        self.assertIn(tracks[3]['id'], self.tracks)
+        self.assertIn(tracks[5]['id'], self.tracks)
